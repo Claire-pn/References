@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <script src="scripts/jquery.min.js"></script>
+
+
+    <title>IOT FAN</title>
+</head>
+
+<body> 
+        <center><div class="card"style ="background-color:yellow"><h1>IOT FAN</h1></div></center>
+
+<center><div>
+    <h4 id="status">The device is currently turned off</h4>
+    <button class="ui primary basic button"  id="1" >ONE</button>
+    <button class="ui secondary basic button"id ="2">TWO</button>
+    <button class="ui positive basic button" id ="3">THREE</button>
+    <button class="ui negative basic button" id ="off">OFF</button>
+
+</div></center>
+
+
+</body>
+<script src="scripts/browserMqtt.js"></script>
+<script src="scripts/moment.js"></script>
+<script>
+        var connect = "wss://test.mosquitto.org:8081/mqtt";
+        client = mqtt.connect(connect);
+        
+        $(document).ready(function(){
+            $("#1").click(function(e){
+                e.preventDefault();    
+                var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+                var topic = 'banawan/fan/status';
+                var payload = 'Turned On: ' +time
+                client.publish(topic, payload);
+                $("#status").html("The fan is currently turned at 1");
+            })
+            $("#2").click(function(e){
+                e.preventDefault();    
+                var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+                var topic = 'banawan/fan/status';
+                var payload = 'Turned On: ' +time
+                client.publish(topic, payload);
+                $("#status").html("The fan is currently turned at 2");
+            })
+            $("#3").click(function(e){
+                e.preventDefault();    
+                var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+                var topic = 'banawan/fan/status';
+                var payload = 'Turned On: ' +time
+                client.publish(topic, payload);
+                $("#status").html("The fan is currently turned at 3");
+            })
+            $("#off").click(function(e){
+                e.preventDefault();
+                var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+                var topic = 'banawan/fan/status';
+                var payload = 'Turned Off: ' +time
+                client.publish(topic, payload);
+                $("#status").html("The fan is currently turned off");
+            })
+        })
+    </script>
+
+</html>

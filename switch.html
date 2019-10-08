@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+        <script src="scripts/jquery.min.js"></script>
+    <title>SWITCH</title>
+</head>
+<body>
+        <center><div class="card"style ="background-color:pink"><h1>SWITCH</h1></div></center>
+      <center><div>  
+        <h4 id="status">The device is currently turned off</h4> 
+        <button class="ui primary basic button"  id="On" >ON</button>
+        <button class="ui secondary basic button"id ="Off">OFF</button>
+        </div></center>
+    
+    
+</body>
+<script src="scripts/browserMqtt.js"></script>
+<script src="scripts/moment.js"></script>
+<script>
+        var connect = "wss://test.mosquitto.org:8081/mqtt";
+        client = mqtt.connect(connect);
+        
+        $(document).ready(function(){
+            $("#On").click(function(e){
+                e.preventDefault();    
+                var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+                var topic = 'banawan/switch/status';
+                var payload = 'Turned On: ' +time
+                client.publish(topic, payload);
+                $("#status").html("The switch is on");
+            })
+            $("#Off").click(function(e){
+                e.preventDefault();    
+                var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+                var topic = 'banawan/switch/status';
+                var payload = 'Turned Off: ' +time
+                client.publish(topic, payload);
+                $("#status").html("The switch is off");
+            })
+        })
+</script>
+</html>
